@@ -1,0 +1,9 @@
+DEPENDENCIES
+  hosts_from_search
+    path: .
+    metadata: true
+
+GRAPH
+  hosts_file (0.2.2)
+  hosts_from_search (0.1.0)
+    hosts_file (~> 0.2.2)

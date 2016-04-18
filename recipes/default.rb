@@ -2,18 +2,18 @@
 # Cookbook Name:: hosts_from_search
 # Recipe:: default
 #
-# Copyright 2016, YOUR_COMPANY_NAME
-#
-# All rights reserved - Do Not Redistribute
-#
 
 nodes = search(:node, node['hosts_from_search']['node_search_query'])
 
 nodes.each do |n|
-  hosts_file_entry n['ipaddress'] do
-    hostname n['hostname']
-    aliases [ n['fqdn'] ]
-    comment "Host entry for #{n['fqdn']}"
+  unless n['ipaddress'].nil? or n['ipaddress'].empty?
+    hosts_file_entry "node #{n['hostname']} entry" do
+      ip_address  n['ipaddress']
+      hostname    n['hostname']
+      aliases     [ n['fqdn'] ]
+      comment     "Host entry for #{n['fqdn']}"
+      not_if      { n['ipaddress'].nil? or n['ipaddress'].empty? }
+    end
   end
 end
 
