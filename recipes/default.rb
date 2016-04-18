@@ -2,6 +2,9 @@
 # Cookbook Name:: hosts_from_search
 # Recipe:: default
 #
+if Chef::Config[:solo]
+  return Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
+end
 
 nodes = search(:node, node['hosts_from_search']['node_search_query'])
 
